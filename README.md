@@ -1,3 +1,15 @@
+This is my personal update for the  "AudioUnitV3Example: Audio Unit Extension and Host Implementation" provided by Apple.
+
+## Requirements
+
+### Build
+
+Xcode 11.3, iOS 13 SDK, macOS 10.15 SDK
+
+Original README follows.
+
+----
+
 # AudioUnitV3Example: Audio Unit Extension and Host Implementation
 
 The Audio Unit Extensions API introduces a mechanism for developers to deliver Audio Units on both iOS and OS X using the same API and also provides a bridging mechanism for existing version 2 Audio Units and hosts allowing them to work with new version 3 Audio Units.
