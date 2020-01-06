@@ -143,20 +143,20 @@ class HostViewController: NSViewController {
                 let preferredSize = viewController.preferredContentSize
                 
                 let views = ["view": view]; //, "superview": superview];
-                let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+                let horizontalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views)
                 superview?.addConstraints(horizontalConstraints)
                 
                 // If a view has no preferred size, or a large preferred size, add a leading and trailing constraint. Otherwise, just a trailing constraint
                 if (preferredSize.height == 0 || preferredSize.height > strongSelf.kAUViewSizeDefaultHeight) {
-                    let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+                    let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views)
                     superview?.addConstraints(verticalConstraints)
                 } else {
-                    let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: views)
+                    let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]", options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: views)
                     superview?.addConstraints(verticalConstraints)
                 }
                 
                 NotificationCenter.default.addObserver(strongSelf, selector: #selector(HostViewController.auViewSizeChanged(_:)), name:
-                    NSNotification.Name.NSViewFrameDidChange, object: nil)
+                    NSView.frameDidChangeNotification, object: nil)
                 
                 strongSelf.auView = view
                 strongSelf.auView?.needsDisplay = true
@@ -167,7 +167,7 @@ class HostViewController: NSViewController {
         }
     }
     
-    func auViewSizeChanged(_ notification : NSNotification) {
+    @objc func auViewSizeChanged(_ notification : NSNotification) {
         if (notification.object! as! NSView === auView ) {
             self.horizontalViewSizeConstraint.constant = (notification.object! as AnyObject).frame.size.width
             
@@ -179,7 +179,7 @@ class HostViewController: NSViewController {
 
     func tableView(_ tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
         if tableView === effectTable {
-            let result = tableView.make(withIdentifier: "MyView", owner: self) as! NSTableCellView
+            let result = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "MyView"), owner: self) as! NSTableCellView
             
             if row > 0 && row <= playEngine.availableAudioUnits.count {
                 let component = playEngine.availableAudioUnits[row - 1];

@@ -110,7 +110,7 @@ class HostViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func selectInstrumentOrEffect(_ sender: AnyObject?) {
         let isInstrument = effectInstrumentSegmentedControl.selectedSegmentIndex == 0 ? false : true
         
-        audioUnitTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: UITableViewScrollPosition.top)
+        audioUnitTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.top)
         
         removeChildController()
         
@@ -124,7 +124,7 @@ class HostViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         noViewLabel.isHidden = true
         
-        playButton.setTitle("Play", for: UIControlState.normal)
+        playButton.setTitle("Play", for: UIControl.State.normal)
         self.audioUnitTableView.reloadData()
         self.presetTableView.reloadData()
     }
@@ -134,17 +134,17 @@ class HostViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         let titleText = isPlaying ? "Stop" : "Play"
         
-		playButton.setTitle(titleText, for: UIControlState.normal)
+        playButton.setTitle(titleText, for: UIControl.State.normal)
 	}
     
     @discardableResult
     func removeChildController() -> Bool {
         if let childViewController = childViewController, let audioUnitView = audioUnitView {
-            childViewController.willMove(toParentViewController: nil)
+            childViewController.willMove(toParent: nil)
 
             audioUnitView.removeFromSuperview()
             
-            childViewController.removeFromParentViewController()
+            childViewController.removeFromParent()
             
             self.childViewController = nil
             
@@ -186,13 +186,13 @@ class HostViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return
             }
 
-            strongSelf.addChildViewController(viewController)
+            strongSelf.addChild(viewController)
             view.frame = strongSelf.viewContainer.bounds
             
             strongSelf.viewContainer.addSubview(view)
             strongSelf.childViewController = viewController
             
-            viewController.didMove(toParentViewController: self)
+            viewController.didMove(toParent: self)
             
             strongSelf.noViewLabel.isHidden = true
         }
